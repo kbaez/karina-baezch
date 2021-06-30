@@ -9,4 +9,6 @@ import com.kbaez.karinabaezch.domain.Price;
 public interface PriceRepository extends CrudRepository<Price, Long>  {
 
     Price save(Price price);
+
+	Price findByCreateDate(String timestamp);
 }

@@ -7,6 +7,6 @@ public interface PriceService {
 	
 	void savePrice(PriceDTO priceDTO);
 	
-	Price getPrice();
+	Price getPrice(String timestamp);
 
 }

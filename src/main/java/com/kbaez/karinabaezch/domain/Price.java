@@ -2,6 +2,7 @@ package com.kbaez.karinabaezch.domain;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,13 +19,14 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class Price {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String lprice;
 	private String curr1;
 	private String curr2;
+	@Column(name = "create_date")
 	private Timestamp createDate;
 }

@@ -31,8 +31,11 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
-	public Price getPrice() {
-		return null;
+	public Price getPrice(String timestamp) {
+		return priceRepository.findByCreateDate(timestamp);
+				
+//				.orElseThrow(() -> new PriceNotFoundException(
+//				String.format("The price with timestamp %d does not exists", timestamp)));
 	}
 
 }
