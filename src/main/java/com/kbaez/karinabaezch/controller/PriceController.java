@@ -1,13 +1,18 @@
 package com.kbaez.karinabaezch.controller;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kbaez.karinabaezch.domain.Price;
@@ -23,9 +28,9 @@ public class PriceController {
     @Autowired
     private PriceService userService;
     
-    @GetMapping("/{timestamp}")
-    public ResponseEntity<PriceDTO> getPriceByTimestamp(@PathVariable String timestamp){
-    	Price price = userService.getPrice(timestamp);
+    @GetMapping("/btc")
+    public ResponseEntity<PriceDTO> getPriceByTimestamp(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")LocalDateTime date){
+    	Price price = userService.getPrice(date);
     	PriceDTO priceDTO = new PriceDTO();
     	priceDTO.setLprice(price.getLprice());
     	priceDTO.setCurr1(price.getCurr1());

@@ -1,7 +1,6 @@
 package com.kbaez.karinabaezch.services.impl;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,14 +25,13 @@ public class PriceServiceImpl implements PriceService {
 		price.setLprice(priceDTO.getLprice());
 		price.setCurr1(priceDTO.getCurr1());
 		price.setCurr2(priceDTO.getCurr2());
-		price.setCreateDate(new Timestamp((new Date()).getTime()));
+		price.setCreateDate(LocalDateTime.now().withNano(0));
 		priceRepository.save(price);
 	}
 
 	@Override
-	public Price getPrice(String timestamp) {
-		return priceRepository.findByCreateDate(timestamp);
-				
+	public Price getPrice(LocalDateTime date) {
+		return priceRepository.findByCreateDate(date);				
 //				.orElseThrow(() -> new PriceNotFoundException(
 //				String.format("The price with timestamp %d does not exists", timestamp)));
 	}
