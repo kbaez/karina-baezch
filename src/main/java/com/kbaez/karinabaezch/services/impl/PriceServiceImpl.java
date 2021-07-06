@@ -1,6 +1,7 @@
 package com.kbaez.karinabaezch.services.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,17 @@ public class PriceServiceImpl implements PriceService {
 		return priceRepository.findByCreateDate(date);				
 //				.orElseThrow(() -> new PriceNotFoundException(
 //				String.format("The price with timestamp %d does not exists", timestamp)));
+	}
+
+	@Override
+	public List<Price> getPriceBetween(LocalDateTime start, LocalDateTime end) {
+		return priceRepository.findByCreateDateGreaterThanEqualAndCreateDateLessThanEqual(start, end);
+	}
+
+	@Override
+	public void savePrice(Price price) {
+		priceRepository.save(price);
+		
 	}
 
 }
