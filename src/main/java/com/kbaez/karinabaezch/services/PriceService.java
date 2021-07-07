@@ -1,7 +1,6 @@
 package com.kbaez.karinabaezch.services;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import com.kbaez.karinabaezch.domain.Price;

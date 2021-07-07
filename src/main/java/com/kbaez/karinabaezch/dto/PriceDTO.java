@@ -43,5 +43,11 @@ public class PriceDTO {
 		this.curr2 = curr2;
 	}
 
+	@Override
+	public String toString() {
+		return "{\"lprice\": "+ getLprice() +"\"curr1\":" +getCurr1()+"\"curr2\":"+ getCurr2()+"}";
+	}
+
+	
 
 }

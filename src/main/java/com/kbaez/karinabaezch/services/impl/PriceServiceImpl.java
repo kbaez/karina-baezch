@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kbaez.karinabaezch.domain.Price;
 import com.kbaez.karinabaezch.dto.PriceDTO;
+import com.kbaez.karinabaezch.exception.PriceNotFoundException;
 import com.kbaez.karinabaezch.repository.PriceRepository;
 import com.kbaez.karinabaezch.services.PriceService;
 
@@ -32,9 +33,9 @@ public class PriceServiceImpl implements PriceService {
 
 	@Override
 	public Price getPrice(LocalDateTime date) {
-		return priceRepository.findByCreateDate(date);				
+		return priceRepository.findByCreateDate(date);
 //				.orElseThrow(() -> new PriceNotFoundException(
-//				String.format("The price with timestamp %d does not exists", timestamp)));
+//				String.format("The price with timestamp %d does not exists", date)));
 	}
 
 	@Override
@@ -46,6 +47,10 @@ public class PriceServiceImpl implements PriceService {
 	public void savePrice(Price price) {
 		priceRepository.save(price);
 		
+	}
+
+	public PriceServiceImpl(PriceRepository priceRepository2) {
+		this.priceRepository = priceRepository2;
 	}
 
 }
