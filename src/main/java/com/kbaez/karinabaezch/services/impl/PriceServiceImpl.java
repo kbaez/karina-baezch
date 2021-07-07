@@ -22,11 +22,7 @@ public class PriceServiceImpl implements PriceService {
 	private PriceRepository priceRepository;
 
 	@Override
-	public void savePrice(PriceDTO priceDTO) {
-		Price price = new Price();
-		price.setLprice(priceDTO.getLprice());
-		price.setCurr1(priceDTO.getCurr1());
-		price.setCurr2(priceDTO.getCurr2());
+	public void savePrice(Price price) {
 		price.setCreateDate(LocalDateTime.now().withNano(0));
 		priceRepository.save(price);
 	}
@@ -39,18 +35,17 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
-	public List<Price> getPriceBetween(LocalDateTime start, LocalDateTime end) {
-		return priceRepository.findByCreateDateGreaterThanEqualAndCreateDateLessThanEqual(start, end);
-	}
-
-	@Override
-	public void savePrice(Price price) {
-		priceRepository.save(price);
-		
+	public Double getPriceBetween(LocalDateTime start, LocalDateTime end) {
+		return priceRepository.findByAvg(start, end);
 	}
 
 	public PriceServiceImpl(PriceRepository priceRepository2) {
 		this.priceRepository = priceRepository2;
+	}
+
+	@Override
+	public Double getMaxPrice() {
+		return priceRepository.getMaxPrice();
 	}
 
 }

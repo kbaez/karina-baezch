@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import com.kbaez.karinabaezch.domain.Price;
+import com.kbaez.karinabaezch.dto.AvgDTO;
 import com.kbaez.karinabaezch.repository.PriceRepository;
 import com.kbaez.karinabaezch.services.PriceService;
 import com.kbaez.karinabaezch.services.impl.PriceServiceImpl;
@@ -34,7 +35,7 @@ public class PriceServiceTest {
 
 	@Test
 	public void testGetPriceByTimestampThenReturnPriceDTO() {
-		Price expectedPrice = buildNewPrice("34324.6", "BTC", "USD", "2021-07-06 20:35:50");
+		Price expectedPrice = buildNewPrice(34324.6, "BTC", "USD", "2021-07-06 20:35:50");
 
 		Mockito.when(priceRepository.findByCreateDate(Mockito.any())).thenReturn(expectedPrice);
 
@@ -45,15 +46,15 @@ public class PriceServiceTest {
 
 	@Test
 	public void testGetPriceBetweenTimestampsThenReturnListPriceDTO() {
-		List<Price> expectedPrice = buildNewListPrice();
-
-		Mockito.when(priceRepository.findByCreateDateGreaterThanEqualAndCreateDateLessThanEqual(Mockito.any(),
-				Mockito.any())).thenReturn(expectedPrice);
-
-		List<Price> response = priceService.getPriceBetween(getLocalDateTime("2021-07-06 10:30:20"),
-				getLocalDateTime("2021-07-06 10:31:20"));
-
-		assertEquals(expectedPrice, response);
+//		AvgDTO expectedAvg = buildNewAvg();
+//
+//		Mockito.when(priceRepository.findByAvg(Mockito.any(),
+//				Mockito.any())).thenReturn(expectedAvg);
+//
+//		AvgDTO response = priceService.getPriceBetween(getLocalDateTime("2021-07-06 10:30:20"),
+//				getLocalDateTime("2021-07-06 10:31:20"));
+//
+//		assertEquals(expectedPrice, response);
 	}
 
 	@Test
@@ -65,19 +66,7 @@ public class PriceServiceTest {
 		});
 	}
 
-	private List<Price> buildNewListPrice() {
-		List<Price> prices = new ArrayList<Price>();
-		prices.add(buildNewPrice("34324.6", "BTC", "USD", "2021-07-06 10:30:20"));
-		prices.add(buildNewPrice("34324.6", "BTC", "USD", "2021-07-06 10:30:30"));
-		prices.add(buildNewPrice("34324.6", "BTC", "USD", "2021-07-06 10:30:40"));
-		prices.add(buildNewPrice("34324.8", "BTC", "USD", "2021-07-06 10:30:50"));
-		prices.add(buildNewPrice("34325.9", "BTC", "USD", "2021-07-06 10:31:00"));
-		prices.add(buildNewPrice("34326.6", "BTC", "USD", "2021-07-06 10:31:10"));
-		prices.add(buildNewPrice("34324.6", "BTC", "USD", "2021-07-06 10:31:20"));
-		return prices;
-	}
-
-	private Price buildNewPrice(String lp, String curr1, String curr2, String date) {
+	private Price buildNewPrice(Double lp, String curr1, String curr2, String date) {
 		Price price = new Price();
 		price.setId(1L);
 		price.setLprice(lp);

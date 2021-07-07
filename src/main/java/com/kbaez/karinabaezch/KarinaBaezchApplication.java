@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kbaez.karinabaezch.domain.Price;
 import com.kbaez.karinabaezch.dto.PriceDTO;
 import com.kbaez.karinabaezch.services.PriceService;
 
@@ -40,7 +41,11 @@ public class KarinaBaezchApplication {
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			PriceDTO priceDTO = objectMapper.readValue(respuesta.body(), PriceDTO.class);
-			priceService.savePrice(priceDTO);
+			Price price = new Price();
+			price.setLprice(Double.valueOf(priceDTO.getLprice()));
+			price.setCurr1(priceDTO.getCurr1());
+			price.setCurr2(priceDTO.getCurr2());
+			priceService.savePrice(price);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

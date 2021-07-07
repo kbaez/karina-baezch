@@ -8,12 +8,12 @@ import com.kbaez.karinabaezch.dto.PriceDTO;
 
 public interface PriceService {
 	
-	void savePrice(PriceDTO priceDTO);
-	
-	void savePrice(Price priceDTO);
+	void savePrice(Price price);
 	
 	Price getPrice(LocalDateTime date);
 
-	List<Price> getPriceBetween(LocalDateTime start, LocalDateTime end);
+	Double getPriceBetween(LocalDateTime start, LocalDateTime end);
+
+	Double getMaxPrice();
 
 }

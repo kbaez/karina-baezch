@@ -23,7 +23,7 @@ public class Price {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String lprice;
+	private Double lprice;
 	private String curr1;
 	private String curr2;
 	@Column(name = "create_date")
@@ -34,10 +34,10 @@ public class Price {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getLprice() {
+	public Double getLprice() {
 		return lprice;
 	}
-	public void setLprice(String lprice) {
+	public void setLprice(Double lprice) {
 		this.lprice = lprice;
 	}
 	public String getCurr1() {

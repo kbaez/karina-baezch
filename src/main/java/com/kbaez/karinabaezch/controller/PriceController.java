@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kbaez.karinabaezch.domain.Price;
+import com.kbaez.karinabaezch.dto.AvgDTO;
 import com.kbaez.karinabaezch.dto.PriceDTO;
 import com.kbaez.karinabaezch.services.PriceService;
 
@@ -29,29 +30,35 @@ public class PriceController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PriceController.class);
 
 	@Autowired
-	private PriceService userService;
+	private PriceService priceService;
 
 	@GetMapping("/price")
 	public ResponseEntity<PriceDTO> getPriceByTimestamp(
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime date) {
-		Price price = userService.getPrice(date);
+		Price price = priceService.getPrice(date);
 		PriceDTO priceDTO = new PriceDTO();
-		priceDTO.setLprice(price.getLprice());
+		priceDTO.setLprice(String.valueOf(price.getLprice()));
 		priceDTO.setCurr1(price.getCurr1());
 		priceDTO.setCurr2(price.getCurr2());
 		return new ResponseEntity<PriceDTO>(priceDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/pricebetween")
-	public ResponseEntity<List<PriceDTO>> getPriceBetweenTwoTimestamp(
+	public ResponseEntity<AvgDTO> getPriceBetweenTwoTimestamp(
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime start,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime end) {
-		List<Price> prices = userService.getPriceBetween(start,end);
-		//List<PriceDTO> pricesDtoList = prices.stream().map(p -> new PriceDTO(p.getLprice(),p.getCurr1(),p.getCurr2())).collect(Collectors.toCollection(ArrayList::new));
-		List<PriceDTO> pricesDTOList = new ArrayList<>();
-		for (Price price : prices) {
-			pricesDTOList.add(new PriceDTO(price.getLprice(), price.getCurr1(), price.getCurr2()));
-		}
-		return new ResponseEntity<List<PriceDTO>>(pricesDTOList, HttpStatus.OK);
+		Double price = priceService.getPriceBetween(start,end);
+		Double maxPrice = priceService.getMaxPrice();
+		
+		AvgDTO avg = new AvgDTO();
+		avg.setAvgPrice(String.valueOf(price));
+		avg.setMaxPrice(String.valueOf(maxPrice));
+		avg.setPercent(calculatePercent(maxPrice, price));
+		return new ResponseEntity<AvgDTO>(avg, HttpStatus.OK);
+	}
+
+	private String calculatePercent(Double maxPrice, Double price) {
+		Double result = ((price - maxPrice) / maxPrice ) * 100;
+		return String.valueOf(result);
 	}
 }
