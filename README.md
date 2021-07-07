@@ -32,7 +32,7 @@ Status: 200 OK
             "curr2": "USD"
 }
 
-Consultar precios entre 2 fechas. Reemplace el parámetro date con uno acorde a la hora y fecha que levante el proyecto.
+Consultar información entre 2 fechas. Reemplace el parámetro date con uno acorde a la hora y fecha que levante el proyecto.
 GET "localhost:8080/btc/price?start=2021-07-05T23:21:58&end=2021-07-05T23:25:58"
 
 Status: 200 OK
