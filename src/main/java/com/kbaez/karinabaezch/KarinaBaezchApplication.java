@@ -29,7 +29,7 @@ public class KarinaBaezchApplication {
 		SpringApplication.run(KarinaBaezchApplication.class, args);
 	}
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 10000)
 	public void getAndSavePriceBtc() {
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://cex.io/api/last_price/BTC/USD")).GET()
